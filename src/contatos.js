@@ -9,16 +9,24 @@ export default class Contato {
 
     async salvarnoBanco(db) {
         try {
-            await db.runAsync(
-            `INSERT OR REPLACE INTO contatos (id, nome, sobrenome, email, telefone) VALUES (?, ?, ?, ?, ?);`,
-            [this.id, this.nome, this.sobrenome, this.email, this.telefone]
-            );
-            console.log("Contato salvo com sucesso.");
+            if(this.id === null){
+                await db.runAsync(
+                `INSERT INTO contatos (nome, sobrenome, email, telefone) VALUES (?, ?, ?, ?);`,
+                [this.nome, this.sobrenome, this.email, this.telefone]
+                );
+                console.log("Contato salvo com sucesso.");
 
-            // Captura o último ID gerado
-            const resultado = await db.getFirstAsync(`SELECT last_insert_rowid() AS id`);
-            this.id = resultado.id;
-            console.log('Contato salvo com ID: ', this.id);
+                // Captura o último ID gerado
+                const resultado = await db.getFirstAsync(`SELECT last_insert_rowid() AS id`);
+                this.id = resultado.id;
+                console.log('Contato salvo com ID: ', this.id);
+            } else {
+                await db.runAsync(
+                    `UPDATE contatos SET nome = ?, sobrenome = ?, email = ?, telefone = ? WHERE id = ?;`,
+                    [this.nome, this.sobrenome, this.email, this.telefone, this.id]
+                );
+                console.log("Contato atualizado com sucesso.");
+            }
         } catch (error) {
             console.error("Erro ao salvar o contato:", error);
             throw error;
