@@ -6,7 +6,7 @@ export default class Contato {
     this.email = email;
     this.telefone = telefone;
   }
-
+    //Salva o OBJETO 'contato' atual no banco de dados
     async salvarnoBanco(db) {
         try {
             if(this.id === null){
@@ -32,6 +32,7 @@ export default class Contato {
             throw error;
         }
     }
+    //Atualiza os dados do OBJETO 'contato' atual localmente a partir de dados de fora
     async atualizar(nome, sobrenome, email, telefone) {
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -39,9 +40,11 @@ export default class Contato {
         this.telefone = telefone;
         console.log("Contato atualizado localmente.");
     }
+    //Retorna o ID do OBJETO 'contato' atual
     async getId() {
         return this.id;
     }
+    //Deleta o contato do banco de dados do banco de dados
     async delet(db)   {
         try {
             if (this.id === null) {
@@ -50,13 +53,19 @@ export default class Contato {
             else {
                 await db.execAsync(`DELETE FROM contatos WHERE id = ${this.id};`);
                 console.log("Contato deletado do banco de dados.");
-                this.id = null; // Reseta o ID localmente
+                 // Reseta os dados localmente
+                this.id = null;
+                this.nome = null;
+                this.sobrenome = null;
+                this.email = null;
+                this.telefone = null;
             }
         } catch (error) {
             console.error("Erro ao deletar o contato:", error);
             throw error;
         }
     }
+    //Muda o OBJETO 'contato' atual para o contato com o ID fornecido
     async mudaContato(db, id){
         try {
             const resultado = await db.getFirstAsync(`SELECT * FROM contatos WHERE id = ${id};`);  
@@ -73,6 +82,17 @@ export default class Contato {
             }
         } catch (error) {
             console.error("Erro ao carregar o contato:", error);
+            throw error;
+        }
+    }
+    //consulta todos os contatos no banco de dados
+    async consultaContatos(db){
+        try {
+            const resultado = await db.getAllAsync(`SELECT * FROM contatos;`);
+            console.log("Contatos carregado do banco de dados:", resultado);
+            return resultado;
+        } catch (error) {
+            console.error("Erro ao consultar tabela contatos:", error);
             throw error;
         }
     }
