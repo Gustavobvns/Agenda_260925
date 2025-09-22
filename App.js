@@ -5,6 +5,11 @@ import { criarTabelaContatos } from './src/DB/CriaTabelaContatos';
 import { getDataBase } from './src/DB/DbConnection';
 import Contato from './src/contatos';
 
+async function criaContatoInicial() {
+  const contato = new Contato(null, null, null, null, null);
+  return contato;
+}
+
 async function testarContato(db) {
   try {
     // Cria um novo contato
@@ -52,8 +57,14 @@ async function testarConexao(db) {
   }
 }
 
+
+
 function MainApp() {
+  //parte inicial para criar o banco, tabela e contato inicial
   const db = getDataBase();
+  criarTabelaContatos(db);
+  const contato = criaContatoInicial();
+  //parte inicial para criar o banco, tabela e contato inicial
 
   useEffect(() => {
     async function rodarTestes() {
