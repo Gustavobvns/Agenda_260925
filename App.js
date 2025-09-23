@@ -63,7 +63,7 @@ function MainApp() {
   //parte inicial para criar o banco, tabela e contato inicial
   const db = getDataBase();
   criarTabelaContatos(db);
-  const contato = criaContatoInicial();
+  const contatoAtual = criaContatoInicial();
   //parte inicial para criar o banco, tabela e contato inicial
 
   useEffect(() => {
@@ -105,3 +105,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
