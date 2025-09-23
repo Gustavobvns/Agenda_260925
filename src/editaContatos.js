@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React,  { useContext, useState, useEffect }from 'react';
 import {Text, StyleSheet, View, TextInput, Button} from 'react-native';
 import { ContatoContext } from './ContatoContext';
 import { getDataBase } from './DB/DbConnection';
@@ -10,41 +10,86 @@ export default function EditaContatos() {
   console.log('CONTATO ATUAL NO EDITA:', contatoAtual);
   const db = getDataBase();
 
-  const handleChange = (field, value) => {
-  };
+   // Inicializa os estados com os dados do contatoAtual
+  const [nome, setNome] = useState(contatoAtual?.nome || '');
+  const [sobrenome, setSobrenome] = useState(contatoAtual?.sobrenome || '');
+  const [email, setEmail] = useState(contatoAtual?.email || '');
+  const [telefone, setTelefone] = useState(contatoAtual?.telefone || '');
 
   const handleSalvar = async () => {
     if (contatoAtual && db) {
-      await contatoAtual.salvarnoBanco(db);
-      // Você pode exibir um alerta ou navegar de volta após salvar
-      console.log('Contato salvo no banco:', contatoAtual);
+      contatoAtual.atualizar(nome, sobrenome, email, telefone);
+      contatoAtual.salvarnoBanco(db);
+      console.log('Contato atualizado e salvo:', contatoAtual);
+    } else {
+        console.log('não foi')
     }
   };
 
+
   return (
-    <View>
-      <Text>Editar Contato</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Editar Contato</Text>
       <TextInput
+        style={styles.input}
         placeholder="Nome"
-        value={contatoAtual?.nome || ''}
-        onChangeText={text => handleChange('nome', text)}
+        value={nome}
+        onChangeText={setNome}
       />
       <TextInput
+        style={styles.input}
         placeholder="Sobrenome"
-        value={contatoAtual?.sobrenome || ''}
-        onChangeText={text => handleChange('sobrenome', text)}
+        value={sobrenome}
+        onChangeText={setSobrenome}
       />
       <TextInput
+        style={styles.input}
         placeholder="Email"
-        value={contatoAtual?.email || ''}
-        onChangeText={text => handleChange('email', text)}
+        value={email}
+        onChangeText={setEmail}
       />
       <TextInput
+        style={styles.input}
         placeholder="Telefone"
-        value={contatoAtual?.telefone || ''}
-        onChangeText={text => handleChange('telefone', text)}
+        value={telefone}
+        onChangeText={setTelefone}
       />
       <Button title="Salvar" onPress={handleSalvar} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f9f9f9',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#333',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 6,
+    padding: 10,
+    marginBottom: 15,
+    fontSize: 16,
+    backgroundColor: '#fff',
+  },
+  button: {
+    marginTop: 10,
+    backgroundColor: '#007AFF',
+    paddingVertical: 12,
+    borderRadius: 6,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    textAlign: 'center',
+  },
+});
