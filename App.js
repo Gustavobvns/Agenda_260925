@@ -1,10 +1,8 @@
-import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import { SQLiteProvider } from 'expo-sqlite';
 import { ContatoContext } from './src/ContatoContext';
-import { useEffect } from 'react';
 import { criarTabelaContatos } from './src/DB/CriaTabelaContatos';
 import { getDataBase } from './src/DB/DbConnection';
-import Contato from './src/contatos';
 import React, { useContext } from 'react';
 import {
   createStaticNavigation,
@@ -18,11 +16,11 @@ import EditaContatos from './src/editaContatos';
 function HomeScreen() {
   const navigation = useNavigation();
   const { contatoAtual } = useContext(ContatoContext);
-  const id = 1; // Exemplo de ID para carregar o contato
+  const id = 4; // Exemplo de ID para carregar o contato
   const db = getDataBase();
 
   const handleEditarContato = async () => {
-    contatoAtual.mudaContato(db, id);
+    await contatoAtual.mudaContato(db, id);
     navigation.navigate('EditaContatos');
   };
 
@@ -56,7 +54,7 @@ function MainApp() {
 
 
   
-  return <Navigation />;;
+  return <Navigation />;
 
 }
 export default function App() {
