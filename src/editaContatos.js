@@ -1,14 +1,15 @@
-import React,  { useContext, useState, useEffect }from 'react';
+import React,  { useContext, useState }from 'react';
 import {Text, StyleSheet, View, TextInput, Button} from 'react-native';
 import { ContatoContext } from './ContatoContext';
 import { getDataBase } from './DB/DbConnection';
+import { useNavigation } from '@react-navigation/native';
 
 
 
 export default function EditaContatos() {
   const { contatoAtual } = useContext(ContatoContext);
-  console.log('CONTATO ATUAL NO EDITA:', contatoAtual);
   const db = getDataBase();
+  const navigation = useNavigation();
 
    // Inicializa os estados com os dados do contatoAtual
   const [nome, setNome] = useState(contatoAtual?.nome || '');
@@ -18,16 +19,25 @@ export default function EditaContatos() {
 
   const handleSalvar = async () => {
     if (contatoAtual && db) {
-      contatoAtual.atualizar(nome, sobrenome, email, telefone);
-      contatoAtual.salvarnoBanco(db);
+      await contatoAtual.atualizar(db, nome, sobrenome, email, telefone);
       console.log('Contato atualizado e salvo:', contatoAtual);
     } else {
         console.log('não foi')
     }
   };
 
+  const handleExcluir = async () => {
+    if (contatoAtual && db) {
+      await contatoAtual.excluir(db);
+      console.log('Contato excluído');
+      navigation.popToTop(); // Volta para a tela anterior
+    } else {
+        console.log('não foi excluido');
+    }
+  };
 
   return (
+    <View style={{flex: 1, justifyContent: 'center'}}>
     <View style={styles.container}>
       <Text style={styles.title}>Editar Contato</Text>
       <TextInput
@@ -51,10 +61,16 @@ export default function EditaContatos() {
       <TextInput
         style={styles.input}
         placeholder="Telefone"
+        keyboardType = "phone-pad"
         value={telefone}
         onChangeText={setTelefone}
       />
       <Button title="Salvar" onPress={handleSalvar} />
+    </View>
+    <View style={styles.container}>
+        <Button style={styles.excluirButton} title="Excluir" onPress={handleExcluir} />
+
+      </View>
     </View>
   );
 }
@@ -84,6 +100,12 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 10,
     backgroundColor: '#007AFF',
+    paddingVertical: 12,
+    borderRadius: 6,
+  },
+  excluirButton: {
+    marginTop: 10,
+    Color: '#FF3B30',
     paddingVertical: 12,
     borderRadius: 6,
   },
