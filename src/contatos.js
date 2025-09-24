@@ -6,8 +6,19 @@ export default class Contato {
     this.email = email;
     this.telefone = telefone;
   }
-    //Salva o OBJETO 'contato' atual no banco de dados
-    async salvarnoBanco(db) {
+
+    //Atualiza os dados do OBJETO localmente e no banco de dados
+    async atualizar(db, nome, sobrenome, email, telefone) {
+        try {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.email = email;
+        this.telefone = telefone;
+        console.log("Contato atualizado localmente.");
+        } catch (error) {
+            console.error("Erro ao atualizar o contato:", error);
+            throw error;
+        }
         try {
             if(this.id === null){
                 await db.runAsync(
@@ -32,20 +43,12 @@ export default class Contato {
             throw error;
         }
     }
-    //Atualiza os dados do OBJETO 'contato' atual localmente a partir de dados de fora
-    async atualizar(nome, sobrenome, email, telefone) {
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.email = email;
-        this.telefone = telefone;
-        console.log("Contato atualizado localmente.");
-    }
     //Retorna o ID do OBJETO 'contato' atual
     async getId() {
         return this.id;
     }
     //Deleta o contato do banco de dados do banco de dados
-    async delet(db)   {
+    async excluir(db)   {
         try {
             if (this.id === null) {
                 throw new Error("Contato não salvo no banco de dados.");
