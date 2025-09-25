@@ -89,7 +89,7 @@ export default class Contato {
         }
     }
     //consulta todos os contatos no banco de dados
-    async consultaContatos(db){
+    static async consultaContatos(db){
         try {
             const resultado = await db.getAllAsync(`SELECT * FROM contatos;`);
             console.log("Contatos carregado do banco de dados:", resultado);

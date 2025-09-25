@@ -9,7 +9,6 @@ export async function criarTabelaContatos(db) {
         telefone VARCHAR(11) NOT NULL
         );`,
     );
-    console.log("Tabela 'contatos' criada ou já existe.");
 } catch (error) {
     console.error("Erro ao criar a tabela 'contatos':", error);
     throw error;

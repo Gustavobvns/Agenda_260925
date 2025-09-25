@@ -9,37 +9,44 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import EditaContatos from './src/editaContatos';
+import EditaContatos from './src/components/editaContatos';
+import CriarContato from "./src/components/criaContato";
+import VisualizaContatos from "./src/components/visualizaContatos";
 
 
 
 function HomeScreen() {
   const navigation = useNavigation();
   const { contatoAtual } = useContext(ContatoContext);
-  const id = 4; // Exemplo de ID para carregar o contato
   const db = getDataBase();
 
-  const handleEditarContato = async () => {
-    await contatoAtual.mudaContato(db, id);
-    navigation.navigate('EditaContatos');
+  const handleCriarContato = async () => {
+    navigation.navigate("CriaContatos");
   };
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Home Screen</Text>
-      <Button onPress={handleEditarContato} title="Editar Contato" />
+      <Button title="Criar Contato" onPress={handleCriarContato} />
+      <VisualizaContatos />
     </View>
   );
 }
+
+function CriaContatosScreen() {
+  return <CriarContato />;
+  }
 
 function EditaContatosScreen() {
   return <EditaContatos />;
   }
 
+
 const RootStack = createNativeStackNavigator({
-  initialRouteName: 'Home',
+  initialRouteName: "Home",
   screens: {
     Home: HomeScreen,
+    CriaContatos: CriaContatosScreen,
     EditaContatos: EditaContatosScreen,
   },
 });
