@@ -72,11 +72,11 @@ export default function EditaContatos() {
         onChangeText={setTelefone}
       />
       <TouchableOpacity style={styles.button} onPress={handleSalvar}>
-      <Text style={styles.button}>Salvar</Text>
+      <Text style={styles.buttonText}>Salvar</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.excluirButton} onPress={handleExcluir}>
-      <Text style={styles.excluirButton}>Excluir</Text>
+      <Text style={styles.buttonText}>Excluir</Text>
       </TouchableOpacity>
     </View>
     </View>
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   excluirButton: {
     marginTop: 10,
-    Color: '#FF3B30',
+    backgroundColor: '#FF3B30',
     paddingVertical: 12,
     borderRadius: 6,
   },
