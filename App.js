@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { SQLiteProvider } from 'expo-sqlite';
 import { ContatoContext } from './src/ContatoContext';
 import { criarTabelaContatos } from './src/DB/CriaTabelaContatos';
@@ -26,8 +26,10 @@ function HomeScreen() {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Sua agenda pessoal</Text>
-      <Button title="Criar Contato" onPress={handleCriarContato} />
+      <Text style={styles.title}>Sua agenda pessoal</Text>
+      <TouchableOpacity style={styles.button} onPress={handleCriarContato}>
+      <Text style={styles.buttonText}>Criar Contato</Text>
+      </TouchableOpacity>
       <VisualizaContatos />
     </View>
   );
@@ -88,5 +90,24 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    marginTop: 10,
+    textAlign: 'center',
+    color: '#333',
+  },
+  button: {
+    marginBottom: 20,
+    width: '60%',
+    backgroundColor: '#007AFF',
+    paddingVertical: 12,
+    borderRadius: 6,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    textAlign: 'center',
+  },
 });
