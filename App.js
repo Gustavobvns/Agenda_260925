@@ -26,7 +26,7 @@ function HomeScreen() {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
+      <Text>Sua agenda pessoal</Text>
       <Button title="Criar Contato" onPress={handleCriarContato} />
       <VisualizaContatos />
     </View>
@@ -88,4 +88,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+
 });
