@@ -51,7 +51,7 @@ export default function VisualizaContatos() {
   };
 
     return (
-  <TouchableOpacity onPress={handleEditarContato} style={{ padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc', width: '90%' }}>
+  <TouchableOpacity onPress={handleEditarContato} style={{ padding: 10, borderBottomWidth: 1, borderBottomColor: '#ccc', width: '95%', alignSelf: 'center' }}>
     <Text>{contato.nome} {contato.sobrenome}</Text>
     <Text>{contato.telefone}</Text>
     <Text>{contato.email}</Text>
@@ -60,7 +60,7 @@ export default function VisualizaContatos() {
   };
 
   return (
-    <View style={{ flex: 1, width: "100%" }}>
+    <View style={{ flex: 1, width: "96%", borderTopWidth: 1, borderTopColor: '#ccc', alignSelf: 'center'}}>
       <FlatList
         keyExtractor={(contato) => contato.id.toString()}
         data={contatos}
@@ -71,3 +71,4 @@ export default function VisualizaContatos() {
 }
 
 const styles = StyleSheet.create({});
+
